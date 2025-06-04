@@ -36,6 +36,12 @@ def read_patients(db: Session = Depends(get_db), _current_user: models.User = De
     return crud.get_patients(db)
 
 
+@app.get("/patients/{patient_id}", response_model=schemas.Patient)
+def read_patients(patient_id: int, db: Session = Depends(get_db),
+                  _current_user: models.User = Depends(auth.get_current_user)):
+    return crud.get_patient(db, patient_id)
+
+
 @app.post("/patients/", response_model=schemas.Patient)
 def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db),
                    _current_user: models.User = Depends(auth.get_current_user)):
