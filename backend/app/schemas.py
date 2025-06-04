@@ -1,3 +1,5 @@
+from datetime import date
+
 from pydantic import BaseModel, EmailStr
 
 
@@ -5,6 +7,8 @@ class PatientBase(BaseModel):
     name: str
     email: EmailStr
     phone: str
+    dob: date
+    gender: bool
     notes: str | None = None
 
 
