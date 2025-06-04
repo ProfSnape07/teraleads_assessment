@@ -9,10 +9,12 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     hashed_password = Column(String)
+    role = Column(String, default="user")
 
 
-class Patient(Base):  # (unchanged)
+class Patient(Base):
     __tablename__ = "patients"
+
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
