@@ -21,6 +21,7 @@ class Patient(PatientBase):
 class UserCreate(BaseModel):
     username: str
     password: str
+    role: str
 
 
 class User(BaseModel):
