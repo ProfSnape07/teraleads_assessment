@@ -53,6 +53,10 @@ def update_patient(patient_id: int, patient: schemas.PatientCreate, db: Session 
                    _current_user: models.User = Depends(auth.get_current_user)):
     if _current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Only admin allowed to edit patients details.")
+    patient = crud.get_patient(db, patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail=f"Patient with id {patient_id} not found.")
+
     return crud.update_patient(db, patient_id, patient)
 
 
@@ -61,6 +65,10 @@ def delete_patient(patient_id: int, db: Session = Depends(get_db),
                    _current_user: models.User = Depends(auth.get_current_user)):
     if _current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Only admin allowed to delete patients.")
+    patient = crud.get_patient(db, patient_id)
+    if not patient:
+        raise HTTPException(status_code=404, detail=f"Patient with id {patient_id} not found.")
+
     return crud.delete_patient(db, patient_id)
 
 
