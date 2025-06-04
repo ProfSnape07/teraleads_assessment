@@ -1,3 +1,13 @@
-.venv
-.idea
-**/__pycache__
+# Virtual environment folders
+.venv/
+
+
+# Bytecode cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE settings (PyCharm, IntelliJ)
+.idea/
