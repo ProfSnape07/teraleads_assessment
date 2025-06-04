@@ -51,6 +51,8 @@ def create_patient(patient: schemas.PatientCreate, db: Session = Depends(get_db)
 @app.put("/patients/{patient_id}", response_model=schemas.Patient)
 def update_patient(patient_id: int, patient: schemas.PatientCreate, db: Session = Depends(get_db),
                    _current_user: models.User = Depends(auth.get_current_user)):
+    if _current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admin allowed to edit patients details.")
     return crud.update_patient(db, patient_id, patient)
 
 
