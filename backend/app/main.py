@@ -57,6 +57,8 @@ def update_patient(patient_id: int, patient: schemas.PatientCreate, db: Session 
 @app.delete("/patients/{patient_id}", response_model=schemas.Patient)
 def delete_patient(patient_id: int, db: Session = Depends(get_db),
                    _current_user: models.User = Depends(auth.get_current_user)):
+    if _current_user.role != "admin":
+        raise HTTPException(status_code=403, detail="Only admin allowed to delete patients.")
     return crud.delete_patient(db, patient_id)
 
 
