@@ -1,4 +1,6 @@
-from pydantic_settings import BaseSettings
+from pathlib import Path
+
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -8,9 +10,7 @@ class Settings(BaseSettings):
     # DATABASE_URL: str = "postgresql://admin:password@localhost:5432/teraleads_db"
     DATABASE_URL: str = "postgresql://postgres:qwerty@localhost:5432/teraleads_db"
 
-    class Config:
-        # load from .env file if present
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=str(Path(__file__).parents[1] / ".env"))
 
 
 settings = Settings()

@@ -15,8 +15,7 @@ class PatientCreate(PatientBase):
 class Patient(PatientBase):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 
 class UserCreate(BaseModel):
@@ -28,5 +27,4 @@ class User(BaseModel):
     id: int
     username: str
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
