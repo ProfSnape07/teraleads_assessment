@@ -27,5 +27,6 @@ class UserCreate(BaseModel):
 class User(BaseModel):
     id: int
     username: str
+    role: str
 
     model_config = {"from_attributes": True}
