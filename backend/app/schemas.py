@@ -34,3 +34,10 @@ class User(BaseModel):
     role: str
 
     model_config = {"from_attributes": True}
+
+class Query(BaseModel):
+    query: str
+
+class Response(BaseModel):
+    query: str
+    reply: str
