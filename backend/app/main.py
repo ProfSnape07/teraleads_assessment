@@ -1,11 +1,24 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from . import models, schemas, crud, database, chatbot, auth
 from .dependencies import get_db
 
+# from starlette.middleware.cors import CORSMiddleware
+# from starlette.middleware import Middleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 models.Base.metadata.create_all(bind=database.engine)
 
 
@@ -15,7 +28,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
     hashed = auth.hash_password(user.password)
-    new_user = models.User(username=user.username, hashed_password=hashed)
+    new_user = models.User(username=user.username, hashed_password=hashed, role="user")
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
