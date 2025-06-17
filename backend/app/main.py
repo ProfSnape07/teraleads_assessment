@@ -87,4 +87,4 @@ def delete_patient(patient_id: int, db: Session = Depends(get_db),
 
 @app.post("/chatbot/", response_model=schemas.Response)
 def chat(question: schemas.Query, _current_user: models.User = Depends(auth.get_current_user)):
-    return chatbot.mock_chatbot_response(question)
+    return chatbot.chatbot_response(question)
